@@ -56,7 +56,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
                           try {
                               const tokenUri = await randomIpfsNft.tokenURI("0")
                               const tokenCounter = await randomIpfsNft.getTokenCounter()
-                              assert.equal(tokenUri.toString(), includes("ipfs://"), true)
+                              assert.equal(tokenUri.toString().includes("ipfs://"), true)
                               assert.equal(tokenCounter.toString(), "1")
                               resolve()
                           } catch (e) {
