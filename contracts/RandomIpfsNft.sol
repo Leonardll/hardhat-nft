@@ -107,11 +107,10 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         uint256 cumulativeSum = 0;
         uint256[3] memory chaneArray = getChanceArray();
         for (uint256 i = 0; i < chaneArray.length; i++) {
-            cumulativeSum += chaneArray[i];
-            if (moddedRng >= cumulativeSum && moddedRng < cumulativeSum + chaneArray[i]) {
+            if (moddedRng >= cumulativeSum && moddedRng < chaneArray[i]) {
                 return Breed(i);
             }
-            cumulativeSum += chaneArray[i];
+            cumulativeSum = chaneArray[i];
         }
         revert RandomIpfsNft__RangeOutOfBounds();
     }

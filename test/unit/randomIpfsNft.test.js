@@ -21,7 +21,6 @@ const { developmentChains } = require("../../helper-hardhat-config")
               it("sets starting values correctly", async function () {
                   const dogTokenUriZero = await randomIpfsNft.getDogTokenUris(0)
                   const isInitialized = await randomIpfsNft.getInitialized()
-                  console.log("dogTokenUriZero", dogTokenUriZero)
                   assert(dogTokenUriZero.includes("ipfs://"))
                   assert.equal(isInitialized, true)
               })
@@ -66,18 +65,15 @@ const { developmentChains } = require("../../helper-hardhat-config")
                       })
                       try {
                           const fee = await randomIpfsNft.getMintFee()
-                          console.log(fee.toString(), "Fee")
                           const requestNftResponse = await randomIpfsNft.requestNft({
                               value: fee.toString(),
                           })
-                          console.log(requestNftResponse)
+
                           const requestNftReceipt = await requestNftResponse.wait(1)
-                          console.log(requestNftReceipt)
                           await vrfCoordinatorV2Mock.fulfillRandomWords(
-                              requestNftReceipt.events[1].args.requestId,
+                              requestNftReceipt.events[1].args[0].toString(),
                               randomIpfsNft.address
                           )
-                          console.log(requestNftReceipt)
                       } catch (e) {
                           console.log(e)
                           reject(e)
@@ -88,6 +84,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
           describe("getBreedFromModdedRng", () => {
               it("should return pug if moddedRng < 10", async function () {
                   const expectedValue = await randomIpfsNft.getBreedFromModdedRng(7)
+                  console.log(expectedValue, "expectedValue")
                   assert.equal(0, expectedValue)
               })
               it("should return shiba-inu if moddedRng is between 10 - 39", async function () {
