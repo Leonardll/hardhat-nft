@@ -66,7 +66,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
                       })
                       try {
                           const fee = await randomIpfsNft.getMintFee()
-                          console.log(fee)
+                          console.log(fee.toString(), "Fee")
                           const requestNftResponse = await randomIpfsNft.requestNft({
                               value: fee.toString(),
                           })
